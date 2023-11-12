@@ -1,0 +1,94 @@
+<section id="about" class="about mb-5">
+    <div class="container">
+
+        <div class="row gy-4 justify-content-center">
+            <div class="col-lg-6">
+                <img src="../../assets/image_sp/registerHotel.jpg" class="img-fluid border-image" alt="">
+            </div>
+            <div class="col-lg-5 content">
+                <h2>{{hotelData.hotelName}}</h2>
+                <p class="fst-italic py-3">
+                    Chào mừng quý khách đến với khách sạn chúng tôi! Chúng tôi rất vui mừng và hân hạnh được phục vụ quý
+                    khách trong thời gian lưu trú tại khách sạn của chúng tôi.
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Địa chỉ:</strong>
+                                <span>{{hotelData.address_District}} - {{hotelData.address_City}}</span>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong>
+                                <span>www.hotel{{hotelData.id}}.com</span>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Điện thoại:</strong>
+                                <span><a>{{hotelData.phoneNumber}}</a></span>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Nhận phòng:</strong>
+                                <span>14h chiều</span>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Trả phòng:</strong>
+                                <span>12h trưa</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Đánh giá:</strong> <span>3.5/5 <i
+                                        class="bi bi-star-fill" style="color: yellow;"></i></span></li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Tiện ích:</strong> <span>Lễ tân 24h, máy
+                                    lạnh,...</span></li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong>
+                                <span>{{hotelData.email}}</span>
+                            </li>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Giá phòng mỗi đêm từ:</strong> <span style="color: orangered;">400.000 VND</span></li>
+                            
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-12">
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <strong>Địa chỉ cụ thể:</strong>
+                                <span>{{hotelData.address_Specifically}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <p class="py-3">
+            {{hotelData.generalDescription}} 
+        </p>
+    </div>
+</section>
+
+<div class="section-header mt-5">
+    <h2>WELLCOME!</h2>
+    <p>Phòng của chúng tôi:</p>
+</div>
+
+<div class="w-100 d-flex justify-content-center">
+    <div id="carouselExampleControlsNoTouching" class="carousel slide w-50" data-bs-touch="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <app-card-hotel></app-card-hotel>
+            </div>
+            <div class="carousel-item">
+                <app-card-hotel></app-card-hotel>
+            </div>
+            <div class="carousel-item">
+                <app-card-hotel></app-card-hotel>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>

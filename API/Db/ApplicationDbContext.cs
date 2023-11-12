@@ -8,7 +8,7 @@ namespace API.Db
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<CustomerInfor> CustomerInfors { get; set; }
-        public virtual DbSet<HotelInfor> HotelInfors { get; set; }
+        public virtual DbSet<RoomBill> RoomBills { get; set; }
+        public virtual DbSet<HotelRoom> HotelRooms { get; set; }
     }
 }

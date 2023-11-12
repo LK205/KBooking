@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" id="floatingName" placeholder="Vị trí">
+                    <label for="floatingName">Tên phòng</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" id="floatingName" placeholder="Price From"
+                        autocomplete=false>
+                    <label for="floatingName">Loại giường</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" id="floatingName" placeholder="Price To">
+                    <label for="floatingName">Loại phòng</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" id="floatingName" placeholder="Tên khách sạn">
+                    <label for="floatingName">Giá phòng</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" id="floatingName" placeholder="Tên khách sạn">
+                    <label for="floatingName">Diện tích phòng</label>
+                </div>
+            </div>
+            <div class="col-xl-12 col-sm-12 ">
+                <div class="container" style="width: 200px; border: solid 1px;">
+                    <img src="{{data || '../assets/user.png'}}" alt="Image mt-2" class="image"
+                        style="width: 100%;">
+
+                </div>
+            </div>
+            <div class="col-xl-12 col-sm-12 mt-2 d-flex justify-content-center">
+                <div class="col-3 ">
+                    <input class="form-control" type="file" id="formFileMultiple" accept=".png,.jpg,.jpeg"
+                    (change)="onselectionFile($event)">
+                </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center">
+                <div class="form-floating mb-2">
+                    <button class="btn btn-success mt-1 btn-lg">Thêm phòng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section id="gallery" class="gallery">
+    <div class="container-fluid">
+        <div class="row gy-4 justify-content-center">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div >
+                    <app-room-in-hotel></app-room-in-hotel>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

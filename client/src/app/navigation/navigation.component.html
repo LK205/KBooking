@@ -8,67 +8,78 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#" class="active">Trang chủ</a></li>
-          <li><a routerLink="HotelRooms">Phòng khách sạn</a></li>
-          <li><a href="#">Về chúng tôi</a></li>
-          <li class="dropdown"><a href="#"><span>Địa điểm</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <li><a routerLink="" (click)="KtraKhachSan()">Phòng khách sạn</a></li>
+          <li><a routerLink="">Về chúng tôi</a></li>
+          <li class="dropdown"><a routerLink=""><span>Địa điểm</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="#">Bãi biển</a></li>
-              <li><a href="#">Cắm trại</a></li>
-              <li><a href="#">Nghỉ dưỡng</a></li>
-              <li><a href="#">Bãi biển</a></li>
-              <li><a href="#">Biệt thự</a></li>
-              <li><a href="#">Căn hộ</a></li>
-              <li class="dropdown"><a href="#"><span>Thành phố</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <li><a routerLink="">Bãi biển</a></li>
+              <li><a routerLink="">Cắm trại</a></li>
+              <li><a routerLink="">Nghỉ dưỡng</a></li>
+              <li><a routerLink="">Bãi biển</a></li>
+              <li class="dropdown"><a routerLink=""><span>Thành phố</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
-                  <li><a href="#">Hà Nội</a></li>
-                  <li><a href="#">Hải Phòng</a></li>
-                  <li><a href="#">Cát Bà</a></li>
-                  <li><a href="#">Quảng Ninh</a></li>
-                  <li><a href="#">Sầm Sơn</a></li>
-                  <li><a href="#">Cửa Lò</a></li>
+                  <li><a routerLink="">Hà Nội</a></li>
+                  <li><a routerLink="">Hải Phòng</a></li>
+                  <li><a routerLink="">Cát Bà</a></li>
+                  <li><a routerLink="">Quảng Ninh</a></li>
+                  <li><a routerLink="">Sầm Sơn</a></li>
+                  <li><a routerLink="">Cửa Lò</a></li>
                 </ul>
               </li>
             </ul>
           </li>
-          <li><a href="#">Dịch Vụ</a></li>
-          <li><a href="#">Liên Hệ</a></li>
-          <li><a routerLink="RegisterHotel">Hợp tác với chúng tôi</a></li>
+          <li><a routerLink="">Dịch Vụ</a></li>
+          <li><a routerLink="">Liên Hệ</a></li>
+          <li *ngIf="!isLogin"><a routerLink="RegisterHotel" routerLinkActive="active">Hợp tác với chúng tôi</a></li>
+          <li *ngIf="dataAccount.role === 1" routerLink="YourHotel/{{dataAccount.id}}" routerLinkActive="active"><a routerLink="YourHotel">Khách sạn của bạn</a></li>
         </ul>
       </nav><!-- .navbar -->
+
+        <div class="dropdown d-flex justify-content-end align-items-center" style="max-width: 20%;"  dropdown *ngIf="isLogin" >
+          <img src="../../assets/user.png" alt="" style="width: 10%; border-radius: 50%;"> 
+          <a *ngIf="dataAccount.role === 0" class="dropdown-toggle  text-light ms-2" style="text-decoration: none;" data-bs-toggle="dropdown">{{dataAccount.middleName  | titlecase}} {{dataAccount.lastName  | titlecase}}</a>
+          <a *ngIf="dataAccount.role === 1" class="dropdown-toggle  text-light ms-2" style="text-decoration: none;" data-bs-toggle="dropdown">{{dataAccount.hotelName  | titlecase}}</a>
+          <ul class="dropdown-menu">
+            <li *ngIf="dataAccount.role === 1" routerLink="Room/{{dataAccount.id}}"><a class="dropdown-item" routerLink="">Thêm phòng</a></li>
+            <li><a class="dropdown-item" routerLink="">Edit</a></li>
+            <li><a class="dropdown-item" routerLink="">Đơn đặt phòng</a></li>
+            <li><a class="dropdown-item" routerLink="" (click)="logout()">Log Out</a></li>
+          </ul>
+        </div>
       
-      
-      <button class="btn btn-light" style="opacity: .7;" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Đăng Nhập</button>
+      <button class="btn btn-light" *ngIf="!isLogin" style="opacity: .7;" data-bs-toggle="modal" data-bs-target="#exampleModal">Đăng Nhập</button>
 
     </div>
   </header>
 
 
-  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal fade" id="exampleModal" aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" id="close_modal" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div class="modal-body">
           <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: black;">Đăng nhập</p>
           <form class="mx-1 mx-md-4">
             <div class="row g-3">
                 <div class="col-12">
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingName" placeholder="Email" [(ngModel)]="email">
-                        <label for="floatingName" style="color: black;">Email</label>
+                        <input type="text" class="form-control" name="Email"  placeholder="Email" [(ngModel)]="email">
+                        <label  style="color: black;">Email</label>
                     </div>
                 </div>
 
                 <div class="col-12">
                   <div class="form-floating mb-2">
-                      <input type="text" class="form-control" id="floatingName" placeholder="Mật khẩu" [(ngModel)]="passWord">
-                      <label for="floatingName" style="color: black;">Mật khẩu</label>
+                      <input type="password" class="form-control" name="Mật khẩu" placeholder="Mật khẩu" [(ngModel)]="passWord">
+                      <label style="color: black;">Mật khẩu</label>
                   </div>
               </div>
 
             </div>
-
             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-              <button class="btn btn-light btn-smal">Đăng nhập</button>
+              <button class="btn btn-light btn-smal" (click)="login()">Đăng nhập</button>
             </div>
 
           </form>
@@ -77,19 +88,4 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Hide this modal and show the first with the button below.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
-        </div>
-      </div>
-    </div>
-  </div>
+ 

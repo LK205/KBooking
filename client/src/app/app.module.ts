@@ -11,8 +11,11 @@ import { HomeComponent } from './home/home.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterHotelComponent } from './register-hotel/register-hotel.component';
 import { HotelRoomsComponent } from './hotel-rooms/hotel-rooms.component';
-import { CardRoomComponent } from './hotel-rooms/card-room/card-room.component';
-
+import { YourHotelComponent } from './your-hotel/your-hotel.component';
+import { CardHotelComponent } from './your-hotel/card-hotel/card-hotel.component';
+import { RoomComponent } from './room/room.component';
+import { CardRoomComponent } from './card-room/card-room.component';
+import { RoomInHotelComponent } from './room/room-in-hotel/room-in-hotel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +25,11 @@ import { CardRoomComponent } from './hotel-rooms/card-room/card-room.component';
     RegisterUserComponent,
     RegisterHotelComponent,
     HotelRoomsComponent,
-    CardRoomComponent
+    CardRoomComponent,
+    YourHotelComponent,
+    CardHotelComponent,
+    RoomComponent,
+    RoomInHotelComponent
   ],
   imports: [
     BrowserModule,

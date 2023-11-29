@@ -22,7 +22,7 @@ namespace API.Controllers
             var result = from c in _db.HotelRooms
                          join j in _db.Accounts on c.HotelId equals j.Id
                          where (string.IsNullOrEmpty(local) || j.Address_City.Contains(local) || j.Address_District.Contains(local))
-                           && (c.RoomType == type)
+                           && ( string.IsNullOrEmpty(type)  || c.RoomType.Contains(type))
                            && (c.Price >= pricefrom && c.Price <= priceTo)
                          select new HotelRoomDto()
                          {
@@ -49,6 +49,15 @@ namespace API.Controllers
         [HttpGet("GetAllRoomByHotelID")]
         public async Task<List<HotelRoomDto>> GetRoomByHotelId(long HotelId)
         {
+            var check = await _db.Accounts.FirstOrDefaultAsync(p => p.Id == HotelId);
+            if (check != null)
+            {
+                if (check.HotelName == null) throw new Exception("HotelId does not exist!");
+
+            }
+            else throw new Exception("HotelId does not exist!");
+
+
             var result = from c in _db.HotelRooms
                          join j in _db.Accounts on c.HotelId equals j.Id
                          where c.HotelId == HotelId
@@ -101,9 +110,10 @@ namespace API.Controllers
         [HttpPost("Create")]
         public async Task<bool> Create(HotelRoomDto dto)
         {
-            if(dto.Id > 0 || _db.Accounts.FirstOrDefault(p=> p.Id == dto.HotelId) == null)
+
+            if (dto.Id > 0 )
             {
-                throw new Exception("Hotel Id does not exist! Or Id was used!");
+                throw new Exception("Id was used!");
             }
 
             HotelRoom newHoRoom = new HotelRoom()
@@ -127,6 +137,15 @@ namespace API.Controllers
         [HttpPut("Update")]
         public async Task<bool> Update(HotelRoomDto dto)
         {
+            var checkHotelId = await _db.Accounts.FirstOrDefaultAsync(p => p.Id == dto.HotelId);
+            if (checkHotelId != null)
+            {
+                if (checkHotelId.HotelName == null) throw new Exception("HotelId does not exist!");
+
+            }
+            else throw new Exception("HotelId does not exist!");
+
+
             var check = _db.HotelRooms.FirstOrDefault(p => p.Id == dto.Id);
             if (check == null)
             {

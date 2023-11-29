@@ -60,8 +60,6 @@ export class NavigationComponent implements OnInit {
       error => {
         alert("Email hoặc mật khẩu không chính xác!");
       })
-     
-    
   }
 
   logout() {

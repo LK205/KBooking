@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-room',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./card-room.component.css']
 })
 export class CardRoomComponent {
+  constructor(private router: Router){}
 
+
+
+  click(){
+    this.router.navigateByUrl('YourHotel/' +2)
+  }
 }

@@ -3,38 +3,42 @@
         <div class="row g-3">
             <div class="col-12">
                 <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Vị trí">
+                    <input type="text" class="form-control" id="floatingName" 
+                        placeholder="Tên phòng" name="RoomName" [(ngModel)]="dataRoom.roomName">
                     <label for="floatingName">Tên phòng</label>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Price From"
-                        autocomplete=false>
+                    <input type="text" class="form-control" id="floatingName" placeholder="Loại giường"
+                        autocomplete=false name="BedType" [(ngModel)]="dataRoom.bedType">
                     <label for="floatingName">Loại giường</label>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Price To">
+                    <input type="text" class="form-control" id="floatingName" placeholder="Loại phòng"
+                    name="Loại phòng" [(ngModel)]="dataRoom.roomType">
                     <label for="floatingName">Loại phòng</label>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Tên khách sạn">
+                    <input type="number" min="0" class="form-control" id="floatingName" 
+                        placeholder="Giá phòng" name="price" [(ngModel)]="dataRoom.price">
                     <label for="floatingName">Giá phòng</label>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Tên khách sạn">
+                    <input type="text" class="form-control" id="floatingName" 
+                        placeholder="Diện tích phòng" name="roomArea" [(ngModel)]="dataRoom.roomArea">
                     <label for="floatingName">Diện tích phòng</label>
                 </div>
             </div>
             <div class="col-xl-12 col-sm-12 ">
                 <div class="container" style="width: 200px; border: solid 1px;">
-                    <img src="{{data || '../assets/user.png'}}" alt="Image mt-2" class="image"
+                    <img src="{{dataRoom.roomImage || '../assets/user.png'}}" alt="Image mt-2" class="image"
                         style="width: 100%;">
 
                 </div>
@@ -48,7 +52,7 @@
 
             <div class="col-12 d-flex justify-content-center">
                 <div class="form-floating mb-2">
-                    <button class="btn btn-success mt-1 btn-lg">Thêm phòng</button>
+                    <button class="btn btn-success mt-1 btn-lg" (click)="createRoom()">Thêm phòng</button>
                 </div>
             </div>
         </div>

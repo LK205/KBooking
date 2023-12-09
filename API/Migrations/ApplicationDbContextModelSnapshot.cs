@@ -181,6 +181,14 @@ namespace API.Migrations
                     b.Property<long>("HotelId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("PriceTotal")
                         .HasColumnType("bigint");
 

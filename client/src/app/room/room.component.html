@@ -1,73 +1,109 @@
-<div class="card">
-    <div class="card-body">
-        <div class="row g-3">
-            <div class="col-12">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" 
-                        placeholder="Tên phòng" name="RoomName" [(ngModel)]="dataRoom.roomName">
-                    <label for="floatingName">Tên phòng</label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Loại giường"
-                        autocomplete=false name="BedType" [(ngModel)]="dataRoom.bedType">
-                    <label for="floatingName">Loại giường</label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Loại phòng"
-                    name="Loại phòng" [(ngModel)]="dataRoom.roomType">
-                    <label for="floatingName">Loại phòng</label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-floating mb-2">
-                    <input type="number" min="0" class="form-control" id="floatingName" 
-                        placeholder="Giá phòng" name="price" [(ngModel)]="dataRoom.price">
-                    <label for="floatingName">Giá phòng</label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" 
-                        placeholder="Diện tích phòng" name="roomArea" [(ngModel)]="dataRoom.roomArea">
-                    <label for="floatingName">Diện tích phòng</label>
-                </div>
-            </div>
-            <div class="col-xl-12 col-sm-12 ">
-                <div class="container" style="width: 200px; border: solid 1px;">
-                    <img src="{{dataRoom.roomImage || '../assets/user.png'}}" alt="Image mt-2" class="image"
-                        style="width: 100%;">
 
-                </div>
-            </div>
-            <div class="col-xl-12 col-sm-12 mt-2 d-flex justify-content-center">
-                <div class="col-3 ">
-                    <input class="form-control" type="file" id="formFileMultiple" accept=".png,.jpg,.jpeg"
-                    (change)="onselectionFile($event)">
-                </div>
-            </div>
-
-            <div class="col-12 d-flex justify-content-center">
-                <div class="form-floating mb-2">
-                    <button class="btn btn-success mt-1 btn-lg" (click)="createRoom()">Thêm phòng</button>
-                </div>
+<div class="w-100 d-flex justify-content-center">
+    <div class="card w-75">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Phòng Khách Sạn</h3>
+                <button class="btn btn-success" (click)=" showModal()">Thêm phòng</button>
             </div>
         </div>
     </div>
 </div>
 
-
 <section id="gallery" class="gallery">
     <div class="container-fluid">
         <div class="row gy-4 justify-content-center">
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div >
-                    <app-room-in-hotel></app-room-in-hotel>
+            <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let item of listData">
+                <div class="card p-1">
+                    <app-room-in-hotel [dataRoom]="item"></app-room-in-hotel>
+                    <div class="d-flex justify-content-evenly">
+                        <button class="btn btn-success" (click)="getByRoomId(item.id)"><i class="bi bi-pencil-square"></i> Sửa</button>
+                        <button class="btn btn-danger" (click)="deleteRoom(item.id)"><i class="bi bi-trash"></i>
+                            Xóa</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true" style="color: black;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label for="floatingName"><span style="color: red;">*</span>Tên phòng</label>
+                        <input type="text" class="form-control" id="floatingName" placeholder="Tên phòng"
+                            name="RoomName" [(ngModel)]="dataRoom.roomName">
+                    </div>
+
+                    <div class="col-6">
+                        <label for="floatingName"><span style="color: red;">*</span>Loại giường</label>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="dataRoom.bedType">
+                            <option value="" selected hidden>Chọn loại giường</option>
+                            <option value="Đơn">Đơn</option>
+                            <option value="Đôi">Đôi</option>
+                            <option value="Ba">Ba</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for="floatingName"><span style="color: red;">*</span>Loại phòng</label>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="dataRoom.roomType">
+                            <option value="" selected hidden>Chọn loại phòng</option>
+                            <option value="Phòng sang trọng">Phòng sang trọng</option>
+                            <option value="Phòng cao cấp">Phòng cao cấp</option>
+                            <option value="Phòng thường">Phòng thường</option>
+                            <option value="Phòng Gia đình">Phòng Gia đình</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for="floatingName"><span style="color: red;">*</span>Giá phòng</label>
+                        <input type="number" min="0" class="form-control" id="floatingName" placeholder="Giá phòng"
+                            name="price" [(ngModel)]="dataRoom.price">
+                    </div>
+                    <div class="col-4">
+                        <label for="floatingName"><span style="color: red;">*</span>Diện tích phòng</label>
+                        <input type="text" class="form-control" id="floatingName" placeholder="Diện tích phòng"
+                            name="roomArea" [(ngModel)]="dataRoom.roomArea">
+                    </div>
+                    <div class="col-xl-12 col-sm-12 ">
+                        <div class="container" style="width: 200px; border: solid 1px;">
+                            <img src="{{dataRoom.roomImage || '../assets/user.png'}}" alt="Image mt-2" class="image"
+                                style="width: 100%;">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-sm-12 mt-2 d-flex justify-content-center">
+                        <div class="col-6 ">
+                            <input class="form-control" type="file" id="formFileMultiple" accept=".png,.jpg,.jpeg"
+                                (change)="onselectionFile($event)">
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-center">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-danger">Xóa</button>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="button" class="btn btn-success me-1" (click)="createOrUpdateRoom()">Lưu</button>
+                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

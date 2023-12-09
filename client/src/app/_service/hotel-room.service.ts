@@ -10,7 +10,7 @@ export class HotelRoomService {
   readonly apiUrl = "https://localhost:44394/api/";
   constructor(private http: HttpClient) { }
 
-  GetAllRoom(type: string, local: string, priceFrom: number, priceTo: number): Observable<any[]> {
+  GetAll(type: string, local: string, priceFrom: number, priceTo: number): Observable<any[]> {
     let _url = this.apiUrl + "HotelRoom/GetAllRoom?";
 
     if (type !== null || type !== undefined) {
@@ -33,28 +33,23 @@ export class HotelRoomService {
     return this.http.get<any>(_url);
   }
 
-  GetRoomByHotelId(Id: number): Observable<any[]> {
+  GetByHotelId(Id: number): Observable<any[]> {
     let _url = this.apiUrl + "HotelRoom/GetAllRoomByHotelID?HotelId=" + encodeURIComponent("" + Id);
     return this.http.get<any>(_url);
   }
 
-  GetRoomById(Id: number) {
+  GetById(Id: number) {
     let _url = this.apiUrl + "HotelRoom/GetRoom?id=" + encodeURIComponent("" + Id);
     return this.http.get<any>(_url);
   }
 
 
-  CreateRoom(val: Room) {
-    let _url = this.apiUrl + "HotelRoom/Create";
+  CreateOrUpdate(val: Room) {
+    let _url = this.apiUrl + "HotelRoom/CreateOrUpdate";
     return this.http.post(_url, val);
   }
 
-  UpdateRoom(val: Room) {
-    let _url = this.apiUrl + "HotelRoom/Update";
-    return this.http.put(_url, val);
-  }
-
-  DeleteRoom(Id: number) {
+  Delete(Id: number) {
     let _url = this.apiUrl + "HotelRoom/Delete?id=" + encodeURIComponent("" + Id);
     return this.http.delete(_url);
 

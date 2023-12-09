@@ -43,6 +43,7 @@ export class NavigationComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.getCurrentUser();
   }
 
   login() {
@@ -55,6 +56,9 @@ export class NavigationComponent implements OnInit {
         if(this.dataAccount.role === 1 ){
           this.router.navigateByUrl('YourHotel/' + res.id);
         }
+
+        localStorage.setItem('user', JSON.stringify(res));
+        this._serviceAccount.setCurrentUser(res);
         $('#close_modal').click();
     },
       error => {
@@ -63,7 +67,40 @@ export class NavigationComponent implements OnInit {
   }
 
   logout() {
+    this._serviceAccount.logOut();
     this.isLogin = false;
+  }
+
+  getCurrentUser(){
+    this._serviceAccount.currentUser$.subscribe(user =>{
+      this.isLogin = !!user;
+      this.dataAccount = user ?? {
+        id: 0,
+        email: "",
+        phoneNumber: "",
+        password: "",
+        creationTime:  new Date,
+        role: 0,
+    
+        middleName: "",
+        lastName: "",
+        gender: 0,
+        dayOfBirth: new Date,
+        cityOfResidence: "",
+        imageBase64: "",
+        isActive: true,
+    
+        hotelName: "",
+        address_City: "",
+        address_District: "",
+        address_Ward: "",
+        address_Specifically: "",
+        avatar: "",
+        website: "",
+        locationDescription: "",
+        generalDescription: "",
+      };
+    })
   }
 
   KtraKhachSan() {

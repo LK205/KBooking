@@ -4,6 +4,8 @@
     {
         public long Id { get; set; }
         public long CustomerId { get; set; }
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
         public long HotelId { get; set; }
         public long RoomId { get; set; }
         public string Status { get; set; }

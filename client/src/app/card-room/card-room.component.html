@@ -1,23 +1,16 @@
-<div>
+<div class="shadow-lg p-1 rounded">
     <div class="gallery-item h-100">
-        <img src="../../assets/image_sp/registerHotel.jpg" class="img-fluid" alt="">
+        <img src="{{dataHotel.data || '../../assets/image_sp/registerHotel.jpg'}}" class="img-fluid" alt="">
         <div class="gallery-links d-flex align-items-center justify-content-center">
         </div>
     </div>
-    <h4>Tên phòng</h4>
+    <h4>{{dataHotel.hotelName}}</h4>
     <div class="row">
         <div class="col-12">
-            <p>Loại phòng</p>
-        </div>
-        <div class="col-12">
-            <p>Loại giường: Giường đôi</p>
-        </div>
-        <div class="col-12">
-            <p>Diện tích phòng: </p>
+            <p>{{dataHotel.address_District}} - {{dataHotel.address_City}} </p>
         </div>
     </div>
-    <h3>Giá 200.000 VND</h3>
     <div class="d-flex justify-content-center">
-        <button class="btn btn-success" (click)="click()">Xem phòng</button>
+        <button class="btn btn-success" (click)="click()">Xem khách sạn</button>
     </div>
 </div>

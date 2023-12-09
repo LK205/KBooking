@@ -37,14 +37,16 @@
 
         <div class="dropdown d-flex justify-content-end align-items-center" style="max-width: 20%;"  dropdown *ngIf="isLogin" >
           <img src="../../assets/user.png" alt="" style="width: 10%; border-radius: 50%;"> 
-          <a *ngIf="dataAccount.role === 0" class="dropdown-toggle  text-light ms-2" style="text-decoration: none;" data-bs-toggle="dropdown">{{dataAccount.middleName  | titlecase}} {{dataAccount.lastName  | titlecase}}</a>
-          <a *ngIf="dataAccount.role === 1" class="dropdown-toggle  text-light ms-2" style="text-decoration: none;" data-bs-toggle="dropdown">{{dataAccount.hotelName  | titlecase}}</a>
+          <a *ngIf="dataAccount.role === 0" class="dropdown-toggle  text-light ms-2" style="text-decoration: none;" data-bs-toggle="dropdown" aria-expanded="false">{{dataAccount.middleName  | titlecase}} {{dataAccount.lastName  | titlecase}}</a>
+          <a *ngIf="dataAccount.role === 1" class="dropdown-toggle  text-light ms-2" style="text-decoration: none;" data-bs-toggle="dropdown" aria-expanded="false">{{dataAccount.hotelName  | titlecase}}</a>
+          
           <ul class="dropdown-menu">
-            <li *ngIf="dataAccount.role === 1" routerLink="Room/{{dataAccount.id}}"><a class="dropdown-item" routerLink="">Thêm phòng</a></li>
-            <li><a class="dropdown-item" routerLink="">Edit</a></li>
+            <li *ngIf="dataAccount.role === 1" routerLink="Room/{{dataAccount.id}}"><a class="dropdown-item" routerLink="">Phòng</a></li>
+            <li><a class="dropdown-item" routerLink="">Thông tin</a></li>
             <li><a class="dropdown-item" routerLink="">Đơn đặt phòng</a></li>
             <li><a class="dropdown-item" routerLink="" (click)="logout()">Log Out</a></li>
           </ul>
+
         </div>
       
       <button class="btn btn-light" *ngIf="!isLogin" style="opacity: .7;" data-bs-toggle="modal" data-bs-target="#exampleModal">Đăng Nhập</button>

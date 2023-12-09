@@ -1,29 +1,31 @@
 ﻿using API.Db;
 using API.Dto;
+using API.Dtos;
 using API.Models;
+using API.Repository;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RTCWeb.Common;
 using System.Diagnostics.Tracing;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     public class AccountController : ApiControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
-
-        public AccountController(ApplicationDbContext dbContext) 
-        {
-            _dbContext = dbContext;
-        }
+        private AccountRepo _repo = new AccountRepo();
 
         [HttpGet("GetHotel")]
         public async Task<AccountDto> GetHotel(long id)
         {
-            var check = _dbContext.Accounts.FirstOrDefault(p => p.Role == 1 && p.Id == id);
+            var check = _repo.GetAll().FirstOrDefault(p => p.Role == 1 && p.Id == id);
             if (check == null)
             {
-                throw new Exception("Email or Password is not valid!");
+                throw new Exception("");
             }
             else
             {
@@ -58,10 +60,23 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("GetAllHotel")]
+        public async Task<object> GetAllHotel(string request = "", int pageSize = 10, int pageNumber = 1)
+        {
+            List<HotelDto> hotels = SQLHelper<HotelDto>.ProcedureToList("spGetAllHotel",
+                new string[] { "@Request", "@PageSize", "@PageNumber" },
+                new object[] { request , pageSize , pageNumber });
+            List<Total> total = SQLHelper<Total>.ProcedureToList("spGetAllHotelTotal",
+                new string[] { "@Request" },
+                new object[] { request });
+
+            return new {hotels , total};
+        }
+
         [HttpGet("Login")]
         public async Task<AccountDto> Login(string email, string password)
         {
-            var check = _dbContext.Accounts.FirstOrDefault(p=> p.Email == email && p.Password == HASH.ToSHA256(password));
+            var check = _repo.GetAll().FirstOrDefault(p=> p.Email == email && p.Password == HASH.ToSHA256(password));
             if(check == null)
             {
                 throw new Exception("Email or Password is not valid!");
@@ -103,7 +118,7 @@ namespace API.Controllers
         [HttpPost("Register")]
         public async Task<Account> Create(AccountDto dto)
         {
-            var check = await _dbContext.Accounts.FirstOrDefaultAsync(p => p.Email == dto.Email);
+            var check =  _repo.GetAll().FirstOrDefault(p => p.Email == dto.Email);
             if (check != null)
             {
                 throw new Exception("Email was used!");
@@ -119,38 +134,68 @@ namespace API.Controllers
                     CreationTime = dto.CreationTime,
                     Role = dto.Role,
 
-                    MiddleName = dto.MiddleName,
-                    LastName = dto.LastName,
+                    MiddleName = dto.MiddleName ?? "",
+                    LastName = dto.LastName ?? "",
                     Gender = dto.Gender,
                     DayOfBirth = dto.DayOfBirth,
-                    CityOfResidence = dto.CityOfResidence,
-                    ImageBase64 = dto.ImageBase64,
+                    CityOfResidence = dto.CityOfResidence ?? "",
+                    ImageBase64 = dto.ImageBase64 ?? "",
                     IsActive = dto.IsActive,
 
-                    HotelName = dto.HotelName,
-                    Address_City = dto.Address_City,
-                    Address_District = dto.Address_District,
-                    Address_Ward = dto.Address_Ward,
-                    Address_Specifically = dto.Address_Specifically,
-                    Avatar = dto.Avatar,
-                    Website = dto.Website,
-                    LocationDescription = dto.LocationDescription,
-                    GeneralDescription = dto.GeneralDescription,
+                    HotelName = dto.HotelName ?? "",
+                    Address_City = dto.Address_City ?? "",
+                    Address_District = dto.Address_District ?? "",
+                    Address_Ward = dto.Address_Ward ?? "",
+                    Address_Specifically = dto.Address_Specifically ?? "",
+                    Avatar = dto.Avatar ?? "",
+                    Website = dto.Website ?? "",
+                    LocationDescription = dto.LocationDescription ?? "",
+                    GeneralDescription = dto.GeneralDescription ?? "",
                 };
-                _dbContext.Accounts.Add(newAccount);
-                await _dbContext.SaveChangesAsync();
+                await _repo.CreateAsync(newAccount);
 
 
 
-                Account newA = await _dbContext.Accounts.FirstAsync(p => p.Email == dto.Email);
+                Account newA =  _repo.GetAll().First(p => p.Email == dto.Email);
                 return newA;
             }
         }
 
-        [HttpPut("Edit")]
-        public async Task Edit(long id, string password)
+
+        [HttpPut("UpdateAccount")]
+        public async Task UpdateAccount(AccountDto data)
         {
-            var check = await _dbContext.Accounts.FirstOrDefaultAsync(p => p.Id == id);
+            Account account = _repo.GetByID(data.Id);
+
+
+            //Cus
+            account.MiddleName = data.MiddleName;
+            account.LastName = data.LastName;
+            account.Gender = data.Gender;
+            account.DayOfBirth = data.DayOfBirth;
+            account.CityOfResidence = data.CityOfResidence;
+            account.ImageBase64 = data.ImageBase64;
+            account.IsActive = data.IsActive;
+
+            //Hotel
+            account.HotelName = data.HotelName;
+            account.Address_City = data.Address_City;
+            account.Address_District = data.Address_District;
+            account.Address_Ward = data.Address_Ward;
+            account.Address_Specifically = data.Address_Specifically;
+            account.Avatar = data.Avatar;
+            account.Website = data.Website;
+            account.LocationDescription = data.LocationDescription;
+            account.GeneralDescription = data.GeneralDescription;
+
+            await _repo.UpdateAsync(account);
+        }
+
+
+        [HttpPut("UpdatePassword")]
+        public async Task UpdatePassword(long id, string password)
+        {
+            var check =  _repo.GetAll().FirstOrDefault(p => p.Id == id);
             if (check == null)
             {
                 throw new Exception("Id does not exist!");
@@ -158,19 +203,17 @@ namespace API.Controllers
             else
             {
                 check.Password = HASH.ToSHA256(password);
-                _dbContext.Update(check);
-                await _dbContext.SaveChangesAsync();
+                await _repo.UpdateAsync(check);
             }
         }
 
         [HttpDelete("Delete")]
         public async Task<bool> Delete(long id)
         {
-            var check = await _dbContext.Accounts.FirstAsync(p => p.Id == id);
+            var check = _repo.GetAll().FirstOrDefault(p => p.Id == id);
             if (check != null)
             {
-                _dbContext.Accounts.Remove(check);
-                _dbContext.SaveChanges();
+                _repo.Delete(id);
                 return true;
             }
 

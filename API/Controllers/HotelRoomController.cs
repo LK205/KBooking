@@ -1,6 +1,7 @@
 ﻿using API.Db;
 using API.Dtos;
 using API.Models;
+using API.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -10,7 +11,7 @@ namespace API.Controllers
     public class HotelRoomController : ApiControllerBase
     {
         private readonly ApplicationDbContext _db;
-
+        private HotelRoomRepo _repo = new HotelRoomRepo();
         public HotelRoomController(ApplicationDbContext db)
         {
             _db = db;
@@ -47,17 +48,8 @@ namespace API.Controllers
 
 
         [HttpGet("GetAllRoomByHotelID")]
-        public async Task<List<HotelRoomDto>> GetRoomByHotelId(long HotelId)
+        public async Task<List<HotelRoomDto>> GetAllRoomByHotelId(long HotelId)
         {
-            var check = await _db.Accounts.FirstOrDefaultAsync(p => p.Id == HotelId);
-            if (check != null)
-            {
-                if (check.HotelName == null) throw new Exception("HotelId does not exist!");
-
-            }
-            else throw new Exception("HotelId does not exist!");
-
-
             var result = from c in _db.HotelRooms
                          join j in _db.Accounts on c.HotelId equals j.Id
                          where c.HotelId == HotelId
@@ -85,7 +77,7 @@ namespace API.Controllers
         [HttpGet("GetRoom")]
         public async Task<HotelRoomDto> GetRoom(long id)
         {
-            var check = await _db.HotelRooms.FirstOrDefaultAsync(r => r.Id == id);
+            var check = _repo.GetAll().FirstOrDefault(r => r.Id == id);
             if(check == null)
             {
                 throw new Exception("Id does not exist!");
@@ -107,62 +99,23 @@ namespace API.Controllers
             return result;
         }
 
-        [HttpPost("Create")]
-        public async Task<bool> Create(HotelRoomDto dto)
+        [HttpPost("CreateOrUpdate")]
+        public async Task<bool> Create(HotelRoom data)
         {
+            HotelRoom obj = _repo.GetByID(data.Id) ?? new HotelRoom();
 
-            if (dto.Id > 0 )
-            {
-                throw new Exception("Id was used!");
-            }
+            obj.HotelId = data.HotelId;
+            obj.RoomName = data.RoomName;
+            obj.RoomType = data.RoomType;
+            obj.BedType = data.BedType;
+            obj.RoomImage = data.RoomImage;
+            obj.Price = data.Price;
+            obj.RoomArea = data.RoomArea;
+            obj.Decription = data.Decription;
 
-            HotelRoom newHoRoom = new HotelRoom()
-            {
-                HotelId = dto.HotelId,
-                RoomName = dto.RoomName,
-                RoomType = dto.RoomType,
-                BedType = dto.BedType,
-                RoomImage = dto.RoomImage,
-                Price = dto.Price,
-                RoomArea = dto.RoomArea,
-                Decription = dto.Decription
-            };
+            if(obj.Id > 0) await _repo.UpdateAsync(obj);
+            else await _repo.CreateAsync(obj);
 
-            await _db.HotelRooms.AddAsync(newHoRoom);
-            _db.SaveChanges();
-            return true;
-        }
-
-
-        [HttpPut("Update")]
-        public async Task<bool> Update(HotelRoomDto dto)
-        {
-            var checkHotelId = await _db.Accounts.FirstOrDefaultAsync(p => p.Id == dto.HotelId);
-            if (checkHotelId != null)
-            {
-                if (checkHotelId.HotelName == null) throw new Exception("HotelId does not exist!");
-
-            }
-            else throw new Exception("HotelId does not exist!");
-
-
-            var check = _db.HotelRooms.FirstOrDefault(p => p.Id == dto.Id);
-            if (check == null)
-            {
-                throw new Exception("Id does not exist!");
-            }
-
-            check.HotelId = dto.HotelId;
-            check.RoomName = dto.RoomName;
-            check.RoomType = dto.RoomType;
-            check.BedType = dto.BedType;
-            check.RoomImage = dto.RoomImage;
-            check.Price = dto.Price;
-            check.RoomArea = dto.RoomArea;
-            check.Decription = dto.Decription;
-
-            _db.HotelRooms.Update(check);
-            _db.SaveChanges();
             return true;
         }
 
@@ -170,15 +123,8 @@ namespace API.Controllers
         [HttpDelete("Delete")]
         public async Task<bool> Delete(long id)
         {
-            var check = await _db.HotelRooms.FirstAsync(p => p.Id == id);
-            if (check != null)
-            {
-                _db.HotelRooms.Remove(check);
-                _db.SaveChanges();
-                return true;
-            }
-
-            throw new Exception("Delete failed!");
+            _repo.Delete(id);
+            return true;
         }
     }
 }

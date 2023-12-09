@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HotelRoomService } from 'src/app/_service/hotel-room.service';
 
 @Component({
   selector: 'app-room-in-hotel',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room-in-hotel.component.css']
 })
 export class RoomInHotelComponent implements OnInit {
+  @Input() dataRoom : any;
+  
+  constructor (private _service: HotelRoomService){}
   ngOnInit(): void {
   }
 
+  
 }

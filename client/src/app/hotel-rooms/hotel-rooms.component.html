@@ -1,48 +1,68 @@
-<div class="card">
+<div class="text-center">
+    <h2><span>Khách sạn</span> </h2>
+</div>
+
+
+<div class="card card-custom gutter-b mt-1 ">
     <div class="card-body">
-        <div class="row g-3">
-            <div class="col-4">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Vị trí">
-                    <label for="floatingName">Vị trí</label>
-                </div>
+        <div class="row mt-2 d-flex justify-content-between">
+            <div class="col-1">
+                <select class="form-select" id="pageSize" [(ngModel)]="pageSize" (change)="getAllRoom()">
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
             </div>
-            <div class="col-4">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Price From">
-                    <label for="floatingName">Price From</label>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Price To">
-                    <label for="floatingName">Price To</label>
-                </div>
-            </div>
-            <div class="col-8">
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="floatingName" placeholder="Tên khách sạn">
-                    <label for="floatingName">Tên khách sạn</label>
-                </div>
-            </div>
-            
-           
-            <div class="col-4 d-flex justify-content-center">
-                <div class="form-floating mb-2">
-                    <button class="btn btn-success mt-1 btn-lg">Tìm kiếm <i class="bi bi-search"></i></button>
+            <div class="col-6 ">
+                <div class="input-group mb-3">
+                    <input id="request" type="text" class="form-control" placeholder="Tìm kiếm" [(ngModel)]="request">
+                    <button class="btn" style="background-color: deepskyblue;" type="button" id="btn_search"
+                        (click)="getAllRoom()"><i class="bi bi-search" style="color: white;"></i></button>
                 </div>
             </div>
         </div>
+
+        <section id="gallery" class="gallery">
+            <div class="container-fluid">
+                <div class="row gy-4 justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let item of listHotelData">
+                        <div>
+                            <app-card-room [dataHotel]="item"></app-card-room>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="row d-flex justify-content-between">
+            <div class="col-xl-2 col-sm-12 " style="color: black;">
+                <p id="page_details">{{paginationTitle}}</p>
+            </div>
+
+
+            <div class="col-xl-4 col-sm-12 d-flex justify-content-end me-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                        <li class="page-item" (click)="previousPage">
+                            <button class="page-link" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+                        <li class="page-item"><button disabled class="page-link">{{pageNumber}}</button></li>
+                        <li class="page-item" (click)="nextPage()">
+                            <button class="page-link" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+        </div>
+
     </div>
 </div>
-<section id="gallery" class="gallery">
-    <div class="container-fluid">
-        <div class="row gy-4 justify-content-center">
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div >
-                    <app-card-room></app-card-room>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>

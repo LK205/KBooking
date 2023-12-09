@@ -15,6 +15,7 @@ import { YourHotelComponent } from './your-hotel/your-hotel.component';
 import { RoomComponent } from './room/room.component';
 import { CardRoomComponent } from './card-room/card-room.component';
 import { RoomInHotelComponent } from './room/room-in-hotel/room-in-hotel.component';
+import { RoomTrackingComponent } from './room-tracking/room-tracking.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { RoomInHotelComponent } from './room/room-in-hotel/room-in-hotel.compone
     CardRoomComponent,
     YourHotelComponent,
     RoomComponent,
-    RoomInHotelComponent
+    RoomInHotelComponent,
+    RoomTrackingComponent
   ],
   imports: [
     BrowserModule,

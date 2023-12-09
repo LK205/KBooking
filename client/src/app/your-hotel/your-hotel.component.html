@@ -3,7 +3,7 @@
 
         <div class="row gy-4 justify-content-center">
             <div class="col-lg-6">
-                <img src="../../assets/image_sp/registerHotel.jpg" class="img-fluid border-image" alt="">
+                <img src="{{hotelData.avatar || '../../assets/image_sp/registerHotel.jpg'}}" class="img-fluid border-image" alt="">
             </div>
             <div class="col-lg-5 content">
                 <h2>{{hotelData.hotelName}}</h2>
@@ -79,9 +79,9 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <h4>Tên phòng: {{item.roomName}}</h4>
-                        <p>Loại phòng: {{item.roomType}}</p>
-                        <h3>{{item.price}} VND</h3>
+                        <h4>{{item.roomName}}</h4>
+                        <p>Loại: {{item.roomType}}</p>
+                        <h3 style="color: red;">{{item.price}} VND</h3>
                     </div>
                     <div class="col-6 d-flex justify-content-center align-items-center">
                         <button class="btn btn-success" (click)="getRoomById(item.id)">Đặt phòng</button>
@@ -125,7 +125,7 @@
                     <div class="col-4">
                         <label for="inputDate" class="col-sm-12 color_black">Nhận phòng</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" [(ngModel)]="roomBill.fromBokDate" (change)="changeDate($event)">
+                            <input type="date" class="form-control"  [(ngModel)]="roomBill.fromBokDate" (change)="changeDate($event)">
                         </div>
                     </div>
 

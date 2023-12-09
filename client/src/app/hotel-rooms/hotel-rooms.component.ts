@@ -21,7 +21,6 @@ export class HotelRoomsComponent implements OnInit {
 
   getAllRoom() {
     this._hotelService.getAllHotel(this.request, this.pageSize, this.pageNumber).subscribe((res: { hotels: any[], total: any[] }) => {
-      console.log(res);
       this.listHotelData = res.hotels;
       this.totalPage = Math.ceil(res.total[0].totalCount / this.pageSize);
       this.paginationTitle = "Page " + this.pageNumber + " of " + this.totalPage;

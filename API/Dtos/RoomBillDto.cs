@@ -13,7 +13,7 @@
         public string HotelName { get; set; }
         public string Address_City { get; set; }
         public string Address_District { get; set; }
-
+        public string HotelPhone { get; set; }
 
         public long RoomId { get; set; }
         public string RoomName { get; set; }

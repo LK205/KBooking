@@ -14,7 +14,7 @@ declare var $: any;
 })
 export class YourHotelComponent implements OnInit {
   hotelId: any = 0;
-  hotelData : Account ={
+  hotelData: Account = {
     id: 0,
     email: "",
     phoneNumber: "",
@@ -40,86 +40,89 @@ export class YourHotelComponent implements OnInit {
     locationDescription: "",
     generalDescription: "",
   };
-  CustomerId : number = 0;
+  CustomerId: number = 0;
   listRoomData: any[] | undefined;
   minPrice = 0;
-
-  roomData : Room = {
-    id : 0,
-    hotelId : 0,
-    roomName : "",
-    roomType : "",
-    bedType : "",
-    roomImage : "",
-    price  : 0,
-    roomArea : "",
-    decription : "",
-};
+  currentDate = (new Date());
+  roomData: Room = {
+    id: 0,
+    hotelId: 0,
+    roomName: "",
+    roomType: "",
+    bedType: "",
+    roomImage: "",
+    price: 0,
+    roomArea: "",
+    decription: "",
+  };
 
   roomBill: Bill = {
-    id : 0,
-    customerId : this.CustomerId,
+    id: 0,
+    customerId: this.CustomerId,
     name: "",
     phoneNumber: "",
-    hotelId : this.hotelId,
-    roomId : 0,
-    status : "",
-    priceTotal : 0,
-    additionalServices : "",
-    fromBokDate : new Date(),
-    toBokDate : new Date(),
-    craetionTime : new Date(),
-}
-totalNight: number =0;
+    hotelId: this.hotelId,
+    roomId: 0,
+    status: "",
+    priceTotal: 0,
+    additionalServices: "",
+    fromBokDate: new Date(),
+    toBokDate: new Date(),
+    craetionTime: new Date(),
+  }
+  totalNight: number = 0;
 
-  constructor(private router: ActivatedRoute, private _service : AccountService, private _hotelService: HotelRoomService,
-            private _billService: RoomBillService){}
+  constructor(private router: ActivatedRoute, private _service: AccountService, private _hotelService: HotelRoomService,
+    private _billService: RoomBillService) { }
 
   ngOnInit(): void {
-    this.hotelId =  this.router.snapshot.paramMap.get('id');
-    this._service.getHotel(this.hotelId).subscribe(res=>{
+    this.hotelId = this.router.snapshot.paramMap.get('id');
+    this._service.getHotel(this.hotelId).subscribe(res => {
       this.hotelData = res;
     })
     this.getAllRoom();
-    this.CustomerId = JSON.parse(localStorage.getItem('user') || "0").id
+    this.CustomerId = JSON.parse(localStorage.getItem('user') || "0").id;
+    console.log(this.currentDate);
   }
 
 
-  getAllRoom(){
-      this._hotelService.GetByHotelId(this.hotelId).subscribe(res => {
-        this.listRoomData = res;
-        let price = 100000000;
-        res.forEach(e =>{
-          if(e.price <= price){
-            price = e.price;
-          } 
-        })
-        this.minPrice = price;
+  getAllRoom() {
+    this._hotelService.GetByHotelId(this.hotelId).subscribe(res => {
+      this.listRoomData = res;
+      let price = 100000000;
+      res.forEach(e => {
+        if (e.price <= price) {
+          price = e.price;
+        }
       })
+      this.minPrice = price;
+    })
   }
 
-  getRoomById(id: number){
-    this._hotelService.GetById(id).subscribe(res=>{
+  getRoomById(id: number) {
+    this._hotelService.GetById(id).subscribe(res => {
       this.roomData = res;
       this.roomBill.roomId = res.id;
       $('#roomBillModal').modal("show");
     },
-    error =>{
-      alert(error);
-    }
+      error => {
+        alert(error);
+      }
     )
   }
 
-  changeDate(event: any){
-    let day =Math.ceil( (new Date(this.roomBill.toBokDate).getTime() -  new Date (this.roomBill.fromBokDate).getTime()) / (1000 * 60 * 60 * 24));
-   this.totalNight =   day > 0 ? day :  0;
+  changeDate(event: any) {
+    let day = Math.ceil((new Date(this.roomBill.toBokDate).getTime() - new Date(this.roomBill.fromBokDate).getTime()) / (1000 * 60 * 60 * 24));
+    this.totalNight = day > 0 ? day : 0;
   }
 
-  createBill(){
+  createBill() {
     this.roomBill.hotelId = parseInt(this.hotelId);
     this.roomBill.customerId = this.CustomerId;
     this.roomBill.priceTotal = this.totalNight * this.roomData.price;
-    if(this.totalNight == 0){
+
+    this.currentDate.setDate(new Date().getDate() - 1).toString();
+    if (this.totalNight === 0 || new Date(this.roomBill.fromBokDate) < new Date(this.currentDate)) {
       alert("Ngày chưa hợp lệ!");
       return;
     }
@@ -138,20 +141,20 @@ totalNight: number =0;
     })
   }
 
-  reset(){
+  reset() {
     this.roomBill = {
-      id : 0,
-      customerId : 0,
+      id: 0,
+      customerId: 0,
       name: "",
       phoneNumber: "",
-      hotelId : 0,
-      roomId : 0,
-      status : "",
-      priceTotal : 0,
-      additionalServices : "",
-      fromBokDate : new Date(),
-      toBokDate : new Date(),
-      craetionTime : new Date(),
-  }
+      hotelId: 0,
+      roomId: 0,
+      status: "",
+      priceTotal: 0,
+      additionalServices: "",
+      fromBokDate: new Date(),
+      toBokDate: new Date(),
+      craetionTime: new Date(),
+    }
   }
 }

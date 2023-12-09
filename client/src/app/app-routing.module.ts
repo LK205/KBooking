@@ -6,6 +6,7 @@ import { RegisterHotelComponent } from './register-hotel/register-hotel.componen
 import { HotelRoomsComponent } from './hotel-rooms/hotel-rooms.component';
 import { YourHotelComponent } from './your-hotel/your-hotel.component';
 import { RoomComponent } from './room/room.component';
+import { RoomTrackingComponent } from './room-tracking/room-tracking.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: "HotelRooms", component: HotelRoomsComponent},
   {path: "YourHotel/:id", component: YourHotelComponent},
   {path: "Room/:id", component: RoomComponent},
+  {path: "RoomTracking", component: RoomTrackingComponent},
 ];
 
 @NgModule({

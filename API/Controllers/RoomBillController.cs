@@ -2,6 +2,7 @@
 using API.Dtos;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using RTCWeb.Common;
 
 namespace API.Controllers
 {
@@ -15,79 +16,30 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAllBillByHotelId")]
-        public async Task<List<RoomBillDto>> GetBillByHotelId(long HotelId, string Status)
+        public async Task<object> GetBillByHotelId(long HotelId, string request = "", string Status = "", int pageSize = 10, int pageNumber = 1)
         {
-            var result = from c in _db.RoomBills
-                         join j in _db.Accounts on c.HotelId equals j.Id
-                         join d in _db.HotelRooms on c.RoomId equals d.Id
-                         where c.HotelId == HotelId &&
-                         (string.IsNullOrEmpty(Status) || c.Status == Status)
-                         select new RoomBillDto()
-                         {
-                             Id = c.Id,
-                             CustomerId = c.CustomerId,
-                             HotelId = c.HotelId,
-                             Name = c.Name,
-                             PhoneNumber = c.PhoneNumber,
+            List<RoomBillDto> roomBill = SQLHelper<RoomBillDto>.ProcedureToList("spGetAllRoomBillHoltel",
+                new string[] { "@HotelId", "@Status", "@PageSize", "@PageNumber", "@Request" },
+                new object[] { HotelId , Status, pageSize, pageNumber, request });
+            List<Total> total = SQLHelper<Total>.ProcedureToList("spGetAllRoomBillHoltelTotal",
+                new string[] { "@HotelId", "@Status", "@Request" },
+                new object[] { HotelId, Status, request });
 
-                             HotelName = j.HotelName,
-                             Address_City = j.Address_City,
-                             Address_District = j.Address_District,
-                             RoomId = c.RoomId,
-
-                             RoomName = d.RoomName,
-                             RoomType = d.RoomType,
-                             RoomImage = d.RoomImage,
-                             Price = d.Price,
-
-                             Status = c.Status,
-                             PriceTotal = c.PriceTotal,
-                             AdditionalServices = c.AdditionalServices,
-                             FromBokDate = c.FromBokDate,
-                             ToBokDate = c.ToBokDate,
-                             TotalDay = (c.FromBokDate.Date.Subtract(c.ToBokDate.Date).Days + 1),
-                             CraetionTime = c.CraetionTime,
-                         };
-
-            return result.ToList();
+            return new { roomBill , total};
         }
 
 
         [HttpGet("GetAllBillByCusId")]
-        public async Task<List<RoomBillDto>> GetBillByCusId(long CuslId, string Status)
+        public async Task<object> GetBillByCusId(long CuslId,string request ="", string Status = "", int pageSize = 10, int pageNumber = 1)
         {
-            var result = from c in _db.RoomBills
-                         join j in _db.Accounts on c.HotelId equals j.Id
-                         join d in _db.HotelRooms on c.RoomId equals d.Id
-                         where c.CustomerId == CuslId
-                         && (string.IsNullOrEmpty(Status) || c.Status == Status)
-                         select new RoomBillDto()
-                         {
-                             Name = c.Name,
-                             PhoneNumber = c.PhoneNumber,
-                             Id = c.Id,
-                             CustomerId = c.CustomerId,
-                             HotelId = c.HotelId,
+            List<RoomBillDto> roomBill = SQLHelper<RoomBillDto>.ProcedureToList("spGetAllRoomBillCus",
+                new string[] { "@CusId", "@Status", "@PageSize", "@PageNumber", "@Request" },
+                new object[] {CuslId, Status, pageSize, pageNumber, request });
+            List<Total> total = SQLHelper<Total>.ProcedureToList("spGetAllRoomBillCusTotal",
+                new string[] { "@CusId", "@Status", "@Request" },
+                new object[] { CuslId, Status, request });
 
-                             HotelName = j.HotelName,
-                             Address_City = j.Address_City,
-                             Address_District = j.Address_District,
-                             RoomId = c.RoomId,
-
-                             RoomName = d.RoomName,
-                             RoomType = d.RoomType,
-                             RoomImage = d.RoomImage,
-                             Price = d.Price,
-                             Status = c.Status,
-                             PriceTotal = c.PriceTotal,
-                             AdditionalServices = c.AdditionalServices,
-                             FromBokDate = c.FromBokDate,
-                             ToBokDate = c.ToBokDate,
-                             TotalDay = (c.FromBokDate.Date.Subtract(c.ToBokDate.Date).Days + 1),
-                             CraetionTime = c.CraetionTime,
-                         };
-
-            return result.ToList();
+            return new { roomBill, total };
         }
 
 

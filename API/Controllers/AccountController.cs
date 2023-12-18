@@ -76,7 +76,7 @@ namespace API.Controllers
         [HttpGet("Login")]
         public async Task<AccountDto> Login(string email, string password)
         {
-            var check = _repo.GetAll().FirstOrDefault(p=> p.Email == email && p.Password == HASH.ToSHA256(password));
+            var check = _repo.GetAll().FirstOrDefault(p=> p.Email.ToLower() == email.ToLower() && p.Password == HASH.ToSHA256(password));
             if(check == null)
             {
                 throw new Exception("Email or Password is not valid!");
@@ -116,45 +116,18 @@ namespace API.Controllers
 
 
         [HttpPost("Register")]
-        public async Task<Account> Create(AccountDto dto)
+        public async Task<Account> Create(Account dto)
         {
-            var check =  _repo.GetAll().FirstOrDefault(p => p.Email == dto.Email);
+            var check =  _repo.GetAll().FirstOrDefault(p => p.Email.ToLower() == dto.Email.ToLower());
             if (check != null)
             {
                 throw new Exception("Email was used!");
             }
             else
             {
-                var newAccount = new Account()
-                {
-                    Id = dto.Id,
-                    Email = dto.Email,
-                    PhoneNumber = dto.PhoneNumber,
-                    Password = HASH.ToSHA256(dto.Password),
-                    CreationTime = dto.CreationTime,
-                    Role = dto.Role,
-
-                    MiddleName = dto.MiddleName ?? "",
-                    LastName = dto.LastName ?? "",
-                    Gender = dto.Gender,
-                    DayOfBirth = dto.DayOfBirth,
-                    CityOfResidence = dto.CityOfResidence ?? "",
-                    ImageBase64 = dto.ImageBase64 ?? "",
-                    IsActive = dto.IsActive,
-
-                    HotelName = dto.HotelName ?? "",
-                    Address_City = dto.Address_City ?? "",
-                    Address_District = dto.Address_District ?? "",
-                    Address_Ward = dto.Address_Ward ?? "",
-                    Address_Specifically = dto.Address_Specifically ?? "",
-                    Avatar = dto.Avatar ?? "",
-                    Website = dto.Website ?? "",
-                    LocationDescription = dto.LocationDescription ?? "",
-                    GeneralDescription = dto.GeneralDescription ?? "",
-                };
-                await _repo.CreateAsync(newAccount);
-
-
+                dto.Email = dto.Email.ToLower();
+                dto.Password = HASH.ToSHA256(dto.Password);
+                await _repo.CreateAsync(dto);
 
                 Account newA =  _repo.GetAll().First(p => p.Email == dto.Email);
                 return newA;
@@ -163,12 +136,10 @@ namespace API.Controllers
 
 
         [HttpPut("UpdateAccount")]
-        public async Task UpdateAccount(AccountDto data)
+        public async Task<Account> UpdateAccount(Account data)
         {
             Account account = _repo.GetByID(data.Id);
 
-
-            //Cus
             account.MiddleName = data.MiddleName;
             account.LastName = data.LastName;
             account.Gender = data.Gender;
@@ -176,8 +147,6 @@ namespace API.Controllers
             account.CityOfResidence = data.CityOfResidence;
             account.ImageBase64 = data.ImageBase64;
             account.IsActive = data.IsActive;
-
-            //Hotel
             account.HotelName = data.HotelName;
             account.Address_City = data.Address_City;
             account.Address_District = data.Address_District;
@@ -189,35 +158,30 @@ namespace API.Controllers
             account.GeneralDescription = data.GeneralDescription;
 
             await _repo.UpdateAsync(account);
+            return _repo.GetByID(account.Id);
         }
 
 
-        [HttpPut("UpdatePassword")]
-        public async Task UpdatePassword(long id, string password)
+        [HttpGet("UpdatePassword")]
+        public async Task<bool> UpdatePassword(long id, string newPassword, string oldPassword)
         {
-            var check =  _repo.GetAll().FirstOrDefault(p => p.Id == id);
-            if (check == null)
-            {
-                throw new Exception("Id does not exist!");
-            }
-            else
-            {
-                check.Password = HASH.ToSHA256(password);
-                await _repo.UpdateAsync(check);
-            }
-        }
+            var check = _repo.GetByID(id);
+            if (check.Password != HASH.ToSHA256(oldPassword)) return false;
 
+            check.Password = HASH.ToSHA256(newPassword);
+            await _repo.UpdateAsync(check);
+            return true;
+        }
+        [HttpGet("GetById")]
+        public async Task<Account> GetByID(long Id)
+        {
+            return _repo.GetByID(Id);
+        }
         [HttpDelete("Delete")]
         public async Task<bool> Delete(long id)
         {
-            var check = _repo.GetAll().FirstOrDefault(p => p.Id == id);
-            if (check != null)
-            {
-                _repo.Delete(id);
-                return true;
-            }
-
-            throw new Exception("Delete failed!");
+            _repo.Delete(id);
+            return true;
         }
     }
 }

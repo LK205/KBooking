@@ -1,0 +1,329 @@
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-4">
+
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                    <img *ngIf="userData.role === 1" src="{{ userData.avatar || '../../assets/image_sp/registerHotel.jpg'}}" style="width: 100%;" alt="Profile">
+                    <h2 *ngIf="userData.role === 1">{{userData.hotelName}}</h2>
+
+                    <img *ngIf="userData.role === 0" src="{{ userData.avatar || '../../assets/user.png'}}" style="width: 100%;" alt="Profile">
+                    <h2 *ngIf="userData.role === 0">{{userData.middleName + " " +userData.lastName }}</h2>
+                    <div class="social-links mt-2" style="color: black;">
+                        <a routerLink="/" class="twitter me-1"><i class="bi bi-twitter"></i></a>
+                        <a routerLink="/" class="facebook me-1"><i class="bi bi-facebook"></i></a>
+                        <a routerLink="/" class="instagram me-1"><i class="bi bi-instagram"></i></a>
+                        <a routerLink="/" class="linkedin me-1"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Tổng
+                                quan</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Sửa hồ sơ</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Đổi
+                                mật khẩu</button>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content pt-2" >
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview" *ngIf="userData.role === 0">
+
+                            <h5 class="card-title">Thông tin</h5>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label ">Họ tên</div>
+                                <div class="col-lg-9 col-md-8">{{userData.middleName + " " +userData.lastName}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Ngày sinh</div>
+                                <div class="col-lg-9 col-md-8">{{userData.dayOfBirth}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                <div class="col-lg-9 col-md-8">{{userData.email}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Điện thoại</div>
+                                <div class="col-lg-9 col-md-8">{{userData.phoneNumber}}</div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview" *ngIf="userData.role === 1">
+
+                            <h5 class="card-title">Thông tin khách sạn</h5>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label ">Tên khách sạn:</div>
+                                <div class="col-lg-9 col-md-8">{{userData.hotelName}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                <div class="col-lg-9 col-md-8">{{userData.email}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Số điện thoại</div>
+                                <div class="col-lg-9 col-md-8">{{userData.phoneNumber}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Website</div>
+                                <div class="col-lg-9 col-md-8">{{userData.website}}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
+                                <div class="col-lg-9 col-md-8">{{userData.address_Specifically}}</div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit" *ngIf="userData.role === 0">
+
+                            <!-- Profile Edit Form -->
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="col-12 mt-3">
+                                            <div class="container" style="width: 200px; border: solid 1px;">
+                                                <img src="{{avatar || '../assets/user.png'}}" alt="Image mt-2"
+                                                    class="image" style="width: 100%;">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-2 d-flex justify-content-center">
+                                            <div class="col-6 ">
+                                                <input class="form-control" type="file" id="formFileMultiple"
+                                                    accept=".png,.jpg,.jpeg" (change)="onselectionFile($event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-6 row">
+                                        <label for="middleName" class="col-12 col-form-label">Họ</label>
+                                        <div class="col-12">
+                                            <input name="middleName" type="text" class="form-control" id="middleName"
+                                                [(ngModel)]="middleName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 row">
+                                        <label for="lastName" class="col-12 col-form-label">Tên</label>
+                                        <div class="col-12">
+                                            <input name="lastName" type="text" class="form-control" id="lastName"
+                                                [(ngModel)]="lastName">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-6 row">
+                                        <label for="dayOfBirth" class="col-12 col-form-label">Ngày
+                                            Sinh</label>
+                                        <div class="col-12">
+                                            <input name="dayOfBirth" type="date" class="form-control" id="dayOfBirth"
+                                                [(ngModel)]="dateFormat">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 row">
+                                        <label for="Email" class="col-12 col-form-label">Email</label>
+                                        <div class="col-12">
+                                            <input name="Email" type="text" class="form-control" id="Email"
+                                                [(ngModel)]="userData.email" [readOnly]="true" [disabled]="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-6 row">
+                                        <label for="phoneNumber" class="col-12 col-form-label">Điện thoại</label>
+                                    <div class="col-12">
+                                        <input name="phoneNumber" type="text" class="form-control" id="phoneNumber"
+                                            [(ngModel)]="phoneNumber">
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="text-center w-75">
+                                    <button type="submit" class="btn btn-primary" (click)="updateAccount()"><i class="bi bi-calendar-check"></i> Lưu</button>
+                                </div>
+                            </form><!-- End Profile Edit Form -->
+
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit" *ngIf="userData.role === 1">
+
+                            <!-- Profile Edit Form -->
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="col-12 mt-3">
+                                            <div class="container" style="width: 200px; border: solid 1px;">
+                                                <img src="{{avatar || '../../assets/image_sp/registerHotel.jpg'}}" alt="Image mt-2"
+                                                    class="image" style="width: 100%;">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-2 d-flex justify-content-center">
+                                            <div class="col-6 ">
+                                                <input class="form-control" type="file" id="formFileMultiple"
+                                                    accept=".png,.jpg,.jpeg" (change)="onselectionFile($event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-12 row">
+                                        <label for="hotelName" class="col-12 col-form-label">Tên khách sạn</label>
+                                        <div class="col-12">
+                                            <input name="hotelName" type="text" class="form-control" id="hotelName"
+                                                [(ngModel)]="hotelName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 row">
+                                        <label for="website" class="col-12 col-form-label">Website</label>
+                                        <div class="col-12">
+                                            <input name="website" type="text" class="form-control" id="website"
+                                                [(ngModel)]="website">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 row">
+                                        <label for="phoneNumberHotel" class="col-12 col-form-label">Điện thoại</label>
+                                        <div class="col-12">
+                                            <input name="phoneNumberHotel" type="text" class="form-control" id="phoneNumberHotel"
+                                                [(ngModel)]="phoneNumber">
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-6 row">
+                                        <label for="email" class="col-12 col-form-label">Email</label>
+                                        <div class="col-12">
+                                            <input name="email" type="text" class="form-control" id="email"
+                                                [(ngModel)]="email" disabled> 
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-6 row">
+                                        <label for="district" class="col-12 col-form-label">Huyện/Xã</label>
+                                        <div class="col-12">
+                                            <input name="district" type="text" class="form-control" id="district"
+                                                [(ngModel)]="district">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 row">
+                                        <label for="province" class="col-12 col-form-label">Tỉnh/Thành Phố</label>
+                                        <div class="col-12">
+                                            <input name="province" type="text" class="form-control" id="province"
+                                                [(ngModel)]="province">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 row">
+                                        <label for="address" class="col-12 col-form-label">Địa chỉ chi tiết</label>
+                                        <div class="col-12">
+                                            <textarea class="form-control" style="min-height: 120px;" [(ngModel)]="address" name="address" id="address">
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 row">
+                                        <label for="description" class="col-12 col-form-label">Mô tả khách sạn</label>
+                                        <div class="col-12">
+                                            <textarea class="form-control" style="min-height: 120px;" [(ngModel)]="description" name="description" id="description">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center w-100">
+                                    <button type="submit" class="btn btn-primary" (click)="updateAccount()"><i class="bi bi-calendar-check"></i> Lưu</button>
+                                </div>
+                            </form><!-- End Profile Edit Form -->
+
+                        </div>
+
+
+
+
+
+                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                            <!-- Change Password Form -->
+                            <form>
+
+                                <div class="row mb-3">
+                                    <label for="currentPassword" class="col-12 col-form-label">Mật khẩu hiện
+                                        tại:</label>
+                                    <div class="col-12">
+                                        <input name="password" type="password" class="form-control" id="currentPassword"
+                                            [(ngModel)]="currentPassword" [autocomplete]="false">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="newPassword" class="col-12 col-form-label">Mật khẩu
+                                        mới:</label>
+                                    <div class="col-12">
+                                        <input name="newpassword" type="password" class="form-control" id="newPassword"
+                                            [(ngModel)]="userData.passWord"  [autocomplete]="false">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="renewPassword" class="col-12 col-form-label">Xác
+                                        nhận:</label>
+                                    <div class="col-12">
+                                        <input name="renewpassword" type="password" class="form-control"
+                                            id="renewPassword" [(ngModel)]="confirmPassword"  [autocomplete]="false">
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary" (click)="changePassword()"><i class="bi bi-calendar-check"></i>
+                                        Lưu</button>
+                                </div>
+                            </form><!-- End Change Password Form -->
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -48,7 +48,8 @@ export class NavigationComponent implements OnInit {
 
   login() {
     this._serviceAccount.login(this.email, this.passWord).subscribe(res => {
-        this.dataAccount = res;
+      this.dataAccount = res;
+      this.dataAccount.avatar =  (this.dataAccount.avatar === null ||  this.dataAccount.avatar.trim() === "") ? null :   res.avatar;
         this.isLogin = true;
         if(this.dataAccount.role === 0 ){
           this.router.navigateByUrl('HotelRooms');

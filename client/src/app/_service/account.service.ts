@@ -44,4 +44,33 @@ export class AccountService {
     return this.http.get<any>(_url); 
   }
   
+  getById(id: number){
+    let _url = this.apiUrl + "Account/GetById?id=" + encodeURIComponent("" + id);
+    return this.http.get<any>(_url); 
+  }
+
+  updatePassword(id: number, newPassword: string, oldPassword: string){
+    let _url = this.apiUrl + "Account/UpdatePassword?";
+    if (id !== null || id !== undefined) {
+      _url += "id=" + encodeURIComponent("" + id) + "&";
+    }
+    if (newPassword !== null || newPassword !== undefined) {
+      _url += "newPassword=" + encodeURIComponent("" + newPassword) + "&";
+    }
+    if (oldPassword !== null || oldPassword !== undefined) {
+      _url += "oldPassword=" + encodeURIComponent("" + oldPassword) + "&";
+    }
+    _url = _url.replace(/[?&]$/, "");
+    return this.http.get<any>(_url); 
+  }
+
+  updateAccount(val: any){
+    let _url = this.apiUrl + "Account/UpdateAccount";
+    return this.http.put(_url, val);
+  }
+
+  deleteAccount(id: number){
+    let _url = this.apiUrl + "Account/Delete?id=" + encodeURIComponent("" + id);
+    return this.http.delete(_url);
+  }
 }

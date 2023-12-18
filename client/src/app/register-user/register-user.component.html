@@ -7,39 +7,39 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Đăng ký</p>
 
                 <form class="mx-1 mx-md-4">
                   <div class="row g-3">
                     <div class="col-6">
                       <div class="form-floating mb-2">
-                        <input type="text" name="middleName" class="form-control" id="floatingName" placeholder="Họ đệm" [(ngModel)]="dataAccount.middleName">
-                        <label for="floatingName">Họ đệm</label>
+                        <input type="text" name="middleName" class="form-control" id="middleName" placeholder="Họ đệm" [(ngModel)]="dataAccount.middleName">
+                        <label for="middleName">Họ đệm</label>
                       </div>
                     </div>
 
                     <div class="col-6">
                       <div class="form-floating mb-2">
-                        <input type="text" name="name" class="form-control" id="floatingName" placeholder="Tên" [(ngModel)]="dataAccount.lastName">
-                        <label for="floatingName">Tên</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Tên" [(ngModel)]="dataAccount.lastName">
+                        <label for="name">Tên</label>
                       </div>
                     </div>
                   </div>
 
                   <div class="form-floating mb-2">
-                    <input type="text" name="email" class="form-control" id="floatingName" placeholder="Email" [(ngModel)]="dataAccount.email">
-                    <label for="floatingName">Email</label>
+                    <input type="text" name="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="dataAccount.email">
+                    <label for="email">Email</label>
                   </div>
 
 
                   <div class="form-floating mb-2">
-                    <input type="password" name="passWord" class="form-control" id="floatingName" placeholder="Mật khẩu" [(ngModel)]="dataAccount.password">
-                    <label for="floatingName">Mật khẩu</label>
+                    <input type="password" name="passWord" class="form-control" id="passWord" placeholder="Mật khẩu" [(ngModel)]="dataAccount.password">
+                    <label for="passWord">Mật khẩu</label>
                   </div>
 
                   <div class="form-floating mb-2">
-                    <input type="password" name="confirmPassword" class="form-control" id="floatingName" placeholder="Xác nhận mật khẩu" [(ngModel)]="confirmPass">
-                    <label for="floatingName">Xác nhận mật khẩu</label>
+                    <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Xác nhận mật khẩu" [(ngModel)]="confirmPass">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
                   </div>
 
                   <div class="col-12 mb-2">
@@ -52,7 +52,7 @@
                   </div>
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button class="btn btn-success btn-lg" (click)="register()">Register</button>
+                    <button class="btn btn-success btn-lg" (click)="register()">Đăng ký</button>
                   </div>
 
                 </form>

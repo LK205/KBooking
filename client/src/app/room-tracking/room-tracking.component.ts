@@ -19,7 +19,6 @@ export class RoomTrackingComponent implements OnInit{
   constructor(private _roomBillService: RoomBillService){}
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user') || "0")
-    console.log(this.user);
     this.getData();
   }
 
@@ -29,6 +28,8 @@ export class RoomTrackingComponent implements OnInit{
     }else{
       this.getAllBillCus();
     }
+    
+    
   }
 
   getAllBillCus(){
@@ -39,7 +40,7 @@ export class RoomTrackingComponent implements OnInit{
         e.toBokDate = new Date(e.toBokDate).toLocaleDateString();
       })
       this.totalPage = Math.ceil(res.total[0].totalCount / this.pageSize);
-      this.paginationTitle = "Page " + this.pageNumber +" of " + this.totalPage ;
+      this.paginationTitle = "Page " + this.pageNumber +" of " + (this.totalPage == 0 ? 1 : this.totalPage) ;
     })
   }
 
@@ -51,8 +52,19 @@ export class RoomTrackingComponent implements OnInit{
         e.toBokDate = new Date(e.toBokDate).toLocaleDateString();
       })
       this.totalPage = Math.ceil(res.total[0].totalCount / this.pageSize);
-      this.paginationTitle = "Page " + this.pageNumber +" of " + this.totalPage ;
+      this.paginationTitle = "Page " + this.pageNumber +" of " + (this.totalPage == 0 ? 1 : this.totalPage) ;
     })
+  }
+
+  search(event: any){
+    if(event.keyCode === 13){
+      this.pageNumber == 1
+      if(this.user.role === 1){
+        this.getAllBillHotel();
+      }else{
+        this.getAllBillCus();
+      }
+    }
   }
 
   confirmBill(item: any){
@@ -99,13 +111,13 @@ export class RoomTrackingComponent implements OnInit{
   previousPage() {
     if (this.pageNumber > 1) {
       this.pageNumber -= 1;
-      //this.getAllRoom();
+      this.getData();
     }
   }
   nextPage() {
     if (this.pageNumber < this.totalPage) {
       this.pageNumber += 1;
-      //this.getAllRoom();
+      this.getData();
     }
   }
 }

@@ -56,6 +56,10 @@ export class RegisterUserComponent implements OnInit {
         alert("Mật xác thực chưa chính xác!")
       }
       else{
+        this.dataAccount.password.trim();
+        this.dataAccount.email.trim();
+        this.dataAccount.middleName.trim();
+        this.dataAccount.lastName.trim();
         this._serviceAccount.registerAccount(this.dataAccount).subscribe(res => {
           this.reset();
           alert("Đăng ký thành công!");

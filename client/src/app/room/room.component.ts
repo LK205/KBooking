@@ -27,7 +27,6 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.hotelId = this.router.snapshot.paramMap.get('id');
-    console.log(this.hotelId);
     this.getAll();
   }
 
@@ -78,7 +77,6 @@ export class RoomComponent implements OnInit {
       this.closeModal();
     },
       error => {
-        console.log(error)
         alert("Đã xảy ra lỗi gì đó! Hãy thao tác lại!");
       })
   }

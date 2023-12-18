@@ -15,64 +15,64 @@
                     <div class="col-12">
                       <div class="form-floating mb-2">
                         <input type="text" name="Hotel" [(ngModel)]="dataAccount.hotelName" class="form-control"
-                          id="floatingName" placeholder="Tên khách sạn">
-                        <label for="floatingName">Tên khách sạn</label>
+                          id="Hotel" placeholder="Tên khách sạn">
+                        <label for="Hotel">Tên khách sạn</label>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-floating mb-2">
                         <input type="text" name="Phone" [(ngModel)]="dataAccount.phoneNumber" class="form-control"
-                          id="floatingName" placeholder="Số điện thoại">
-                        <label for="floatingName">Số điện thoại</label>
+                          id="Phone" placeholder="Số điện thoại">
+                        <label for="Phone">Số điện thoại</label>
                       </div>
                     </div>
 
                     <div class="col-6">
                       <div class="form-floating mb-2">
                         <input type="text" name="district" [(ngModel)]="dataAccount.address_District"
-                          class="form-control" id="floatingName" placeholder="Huyện/Xã">
-                        <label for="floatingName">Huyện/Xã</label>
+                          class="form-control" id="district" placeholder="Huyện/Xã">
+                        <label for="district">Huyện/Xã</label>
                       </div>
                     </div>
 
                     <div class="col-6">
                       <div class="form-floating mb-2">
                         <input type="text" name="City" [(ngModel)]="dataAccount.address_City" class="form-control"
-                          id="floatingName" placeholder="Tỉnh/Thành phố">
-                        <label for="floatingName">Tỉnh/Thành phố</label>
+                          id="City" placeholder="Tỉnh/Thành phố">
+                        <label for="City">Tỉnh/Thành phố</label>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-floating">
                         <textarea class="form-control" name="Address" [(ngModel)]="dataAccount.address_Specifically"
-                          placeholder="Địa chỉ cụ thể" id="floatingTextarea" style="height: 100px;"></textarea>
-                        <label for="floatingTextarea">Địa chỉ cụ thể</label>
+                          placeholder="Địa chỉ cụ thể" id="Address" style="height: 100px;"></textarea>
+                        <label for="Address">Địa chỉ cụ thể</label>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-floating">
                         <textarea class="form-control" name="Decription" [(ngModel)]="dataAccount.generalDescription"
-                          placeholder="Mô tả chung" id="floatingTextarea" style="height: 100px;"></textarea>
-                        <label for="floatingTextarea">Mô tả về khách sạn</label>
+                          placeholder="Mô tả chung" id="Decription" style="height: 100px;"></textarea>
+                        <label for="Decription">Mô tả về khách sạn</label>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-floating mb-2">
                         <input type="text" name="Email" [(ngModel)]="dataAccount.email" class="form-control"
-                          id="floatingName" placeholder="Email">
-                        <label for="floatingName">Email</label>
+                          id="Email" placeholder="Email">
+                        <label for="Email">Email</label>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-floating mb-2">
                         <input type="password" name="password" [(ngModel)]="dataAccount.password" class="form-control"
-                          id="floatingName" placeholder="Mật khẩu">
-                        <label for="floatingName">Mật khẩu</label>
+                          id="password" placeholder="Mật khẩu">
+                        <label for="password">Mật khẩu</label>
                       </div>
                     </div>
 
@@ -80,8 +80,8 @@
                     <div class="col-12">
                       <div class="form-floating mb-2">
                         <input type="password" name="confirmPW" [(ngModel)]="confirmPass" class="form-control"
-                          id="floatingName" placeholder="Xác nhận mật khẩu">
-                        <label for="floatingName">Xác nhận mật khẩu</label>
+                          id="confirmPW" placeholder="Xác nhận mật khẩu">
+                        <label for="confirmPW">Xác nhận mật khẩu</label>
                       </div>
                     </div>
 
@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button class="btn btn-success btn-lg" (click)="register()">Register</button>
+                    <button class="btn btn-success btn-lg" (click)="register()">Đăng ký</button>
                   </div>
 
                 </form>

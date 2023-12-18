@@ -27,6 +27,13 @@ export class HotelRoomsComponent implements OnInit {
     })
   }
 
+  search(event?: any){
+    if(event.keyCode === 13){
+      this.pageNumber = 1;
+      this.getAllRoom();
+    }
+  }
+
   previousPage() {
     if (this.pageNumber > 1) {
       this.pageNumber -= 1;

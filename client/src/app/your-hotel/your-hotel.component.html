@@ -1,4 +1,4 @@
-<section id="about" class="about mb-5">
+<section id="about" class="about mb-5 w-100">
     <div class="container-fluid">
 
         <div class="row gy-4 justify-content-center">
@@ -18,7 +18,7 @@
                                 <span>{{hotelData.address_District}} - {{hotelData.address_City}}</span>
                             </li>
                             <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong>
-                                <span>www.hotel{{hotelData.id}}.com</span>
+                                <span>{{hotelData.website || "hotel@gmail.com"}}</span>
                             </li>
                             <li><i class="bi bi-chevron-right"></i> <strong>Điện thoại:</strong>
                                 <span><a>{{hotelData.phoneNumber}}</a></span>
@@ -46,15 +46,15 @@
 
                         </ul>
                     </div>
-                    <div class="col-lg-12">
-                        <ul>
-                            <li><i class="bi bi-chevron-right"></i> <strong>Địa chỉ cụ thể:</strong>
-                                <span>{{hotelData.address_Specifically}}</span>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
-
+                <div class="col-lg-12">
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i> <strong>Địa chỉ cụ thể:</strong>
+                            <span>{{hotelData.address_Specifically}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <p class="py-3">
@@ -84,7 +84,7 @@
                         <h3 style="color: red;">{{item.price}} VND</h3>
                     </div>
                     <div class="col-6 d-flex justify-content-center align-items-center">
-                        <button class="btn btn-success" (click)="getRoomById(item.id)">Đặt phòng</button>
+                        <button class="btn btn-success" (click)="getRoomById(item.id)" [disabled]="hotelData.role === 1">Đặt phòng</button>
                     </div>
                 </div>
             </div>

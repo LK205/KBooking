@@ -55,6 +55,14 @@ export class RegisterHotelComponent implements OnInit {
         alert("Mật xác thực chưa chính xác!")
       }
       else {
+        this.dataAccount.password.trim();
+        this.dataAccount.email.trim();
+        this.dataAccount.hotelName.trim();
+        this.dataAccount.address_City.trim();
+        this.dataAccount.address_District.trim();
+        this.dataAccount.generalDescription.trim();
+        this.dataAccount.locationDescription.trim();
+
         this._service.registerAccount(this.dataAccount).subscribe(res => {
           this.reset();
           alert("Đăng ký thành công!");

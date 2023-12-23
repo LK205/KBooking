@@ -82,6 +82,8 @@ export class YourHotelComponent implements OnInit {
     })
     this.getAllRoom();
     this.CustomerId = JSON.parse(localStorage.getItem('user') || "0").id;
+    console.log(this.hotelData);
+    
   }
 
 
